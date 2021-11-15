@@ -54,6 +54,6 @@ export default async (setState, creature) => {
     const data = await response.json()
     const creatures = await getCreatures(data?.refs)
     const creatureSet = [...(creature ? getCreature(creatures, creature) : []), ...selectRandom(creatures, 9, creature)]
-    debugger
+
     setState(creatureSet)
 }
