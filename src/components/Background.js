@@ -2,7 +2,6 @@ import React from 'react'
 import styled from "styled-components"
 
 const Sea = styled.div`
-
     @keyframes seaLevel {
         0% {
             transform: translateY(0px)

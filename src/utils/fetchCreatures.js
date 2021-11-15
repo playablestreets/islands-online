@@ -32,9 +32,28 @@ const getCreatures = async (refs) => {
     return res
 }
 
-export default async (setState) => {
+const getCreature = (creatures, creature) => creatures.filter(c => c.uid == creature)
+
+const selectRandom = (creatures, amount = 9, creature) => {
+    const res = [];
+    const count = creature ? amount - 1 : amount
+
+    for (let i = 0; i < count;) {
+        const random = Math.floor(Math.random() * creatures.length);
+        if (res.indexOf(creatures[random]) !== -1) {
+            continue;
+        };
+        res.push(creatures[random]);
+        i++;
+    };
+    return res;
+}
+
+export default async (setState, creature) => {
     const response = await fetch(apiEndPoint)
     const data = await response.json()
     const creatures = await getCreatures(data?.refs)
-    setState(creatures)
+    const creatureSet = [...(creature ? getCreature(creatures, creature) : []), ...selectRandom(creatures, 9, creature)]
+    debugger
+    setState(creatureSet)
 }

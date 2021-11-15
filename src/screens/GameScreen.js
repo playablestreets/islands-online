@@ -10,7 +10,7 @@ const Wrapper = styled.div`
 `
 
 export const GameScreen = ({ data }) => {
-    const sampleCreature = data[Math.floor(Math.random() * data.length)]
+    const sampleCreature = data[0]
     return (
         <Wrapper>
             <Background />

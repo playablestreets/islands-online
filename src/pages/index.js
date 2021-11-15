@@ -4,6 +4,7 @@ import { LoadingScreen, GameScreen } from "../screens"
 import fetchCreatures from "../utils/fetchCreatures"
 
 
+
 const GlobalStyle = createGlobalStyle`
   html, body, #___gatsby, #gatsby-focus-wrapper {
     height: 100vh;
@@ -12,11 +13,14 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
-export default function Index() {
+const parseQueryString = (string) => string.substring(1).split('&')[0]
+
+export default function Index({ location }) {
   const [creatures, setCreatures] = useState(null)
 
   useEffect(() => {
-    fetchCreatures(setCreatures)
+    const creature = parseQueryString(location?.search)
+      fetchCreatures(setCreatures, creature)
   }, [])
 
   console.log('creatures', creatures)
