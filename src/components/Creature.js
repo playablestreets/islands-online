@@ -4,17 +4,19 @@ import ReactHowler from 'react-howler'
 
 const Wrapper = styled.div`
     position: absolute;
-    left: ${props => `calc(50% - ${props.dimensions.width / 2 }px)`};
-    top: ${props => `calc(50% - ${props.dimensions.height / 2 }px)`};
+    left: ${props => `calc(${props.position.x} - ${props.dimensions.width / 2 }px)`};
+    top: ${props => `calc(${props.position.y} - ${props.dimensions.height / 2 }px)`};
+    display: ${props => props.show ? "block" : "none"};
 `
 
 const Image = styled.img``
 
 
-const Creature = ({ data }) => {
-    const { data: d } = data
+const Creature = ({ data, islands, index }) => {
+    const { data: d, position } = data
     const { creature_image } = d
     const { url, dimensions} = creature_image
+    const show = islands[index]?.show
 
     const [playSound, setPlaySound] = useState(false)
     const [soundPlayer, setSoundPlayer] = useState(null)
@@ -28,7 +30,7 @@ const Creature = ({ data }) => {
     }, [playSound])
     
     return (
-        <Wrapper dimensions={dimensions} onClick={() => setPlaySound(true)}>
+        <Wrapper dimensions={dimensions} onClick={() => setPlaySound(true)} position={position} show={show}>
             <Image src={url} />
             <ReactHowler src="/sample.wav" preload={true} playing={false} ref={(ref) => setSoundPlayer(ref)}/>
         </Wrapper>
