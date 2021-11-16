@@ -19,7 +19,7 @@ const Sea = styled.div`
   position: absolute;
   width: 100%;
   height: calc(64% + 15px);
-  animation-duration: 3s;
+  animation-duration: 5s;
   animation-name: seaLevel;
   animation-iteration-count: infinite;
   bottom: 0;

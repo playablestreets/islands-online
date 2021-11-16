@@ -1,4 +1,5 @@
 import React from "react"
+import levelConfig from "../utils/levelConfig"
 import Background from "../components/Background"
 import Island from "../components/Island"
 import styled from "styled-components"
@@ -17,77 +18,7 @@ const IslandWrapper = styled.div`
 `
 
 export const GameScreen = ({ data }) => {
-  const creaturesOne = [
-    {
-      ...data[0],
-      position: {
-        x: "20%",
-        y: "70%",
-      },
-    },
-    {
-      ...data[1],
-      position: {
-        x: "40%",
-        y: "10%",
-      },
-    },
-    {
-      ...data[2],
-      position: {
-        x: "70%",
-        y: "60%",
-      },
-    },
-  ]
-
-  const creaturesTwo = [
-    {
-      ...data[3],
-      position: {
-        x: "20%",
-        y: "70%",
-      },
-    },
-    {
-      ...data[4],
-      position: {
-        x: "40%",
-        y: "10%",
-      },
-    },
-    {
-      ...data[5],
-      position: {
-        x: "70%",
-        y: "60%",
-      },
-    },
-  ]
-
-  const creaturesThree = [
-    {
-      ...data[6],
-      position: {
-        x: "20%",
-        y: "70%",
-      },
-    },
-    {
-      ...data[7],
-      position: {
-        x: "40%",
-        y: "10%",
-      },
-    },
-    {
-      ...data[8],
-      position: {
-        x: "70%",
-        y: "60%",
-      },
-    },
-  ]
+  const level = levelConfig(data)
 
   return (
     <Wrapper>
@@ -96,17 +27,17 @@ export const GameScreen = ({ data }) => {
           <Island
             dimensions={{ width: 660, height: 290 }}
             position={{ x: "15px", y: "50px" }}
-            creatures={creaturesOne}
+            creatures={level.islandOne}
           />
           <Island
             dimensions={{ width: 410, height: 160 }}
             position={{ x: "575px", y: "-60px" }}
-            creatures={creaturesTwo}
+            creatures={level.islandTwo}
           />
           <Island
             dimensions={{ width: 490, height: 200 }}
             position={{ x: "1000px", y: "10px" }}
-            creatures={creaturesThree}
+            creatures={level.islandThree}
           />
         </IslandWrapper>
       </Background>
