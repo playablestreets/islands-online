@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import ReactHowler from "react-howler"
+import { useSpring, animated } from "react-spring"
 
 const Wrapper = styled.div`
   position: absolute;
@@ -10,13 +11,14 @@ const Wrapper = styled.div`
     `calc(${props.position.y} - ${50 / 2}px)`};
 `
 
-const Image = styled.img`
+const Image = styled(animated.img)`
   display: ${props => (props.show ? "block" : "none")};
+  transform: scale(0.7);
   position: absolute;
   left: ${props =>
-    `-${props.dimensions.width / 2}px`};
+    `-${(props.dimensions.width * 0.7) / 2}px`};
   top: ${props =>
-    `-${props.dimensions.height / 2}px`};
+    `-${(props.dimensions.height * 0.7) / 2}px`};
 `
 
 const Mound = styled.div`
@@ -24,6 +26,8 @@ const Mound = styled.div`
   border-color: 5px solid #e41052;
   height: 50px;
   width: 50px;
+  border-radius: 50%;
+  cursor: pointer;
 `
 
 const Creature = ({ data }) => {
@@ -34,16 +38,18 @@ const Creature = ({ data }) => {
   const [playSound, setPlaySound] = useState(false)
   const [soundPlayer, setSoundPlayer] = useState(null)
   const [show, setShow] = useState(false)
+  const [props, set, stop] = useSpring(() => ({ opacity: 0 }))
 
-  useEffect(() => {
-    if (playSound) {
-      soundPlayer.howler.fade(1, 0, 1000)
-      soundPlayer.howler.play()
-    }
-  }, [playSound])
+//   useEffect(() => {
+//     if (playSound) {
+//       soundPlayer.howler.fade(1, 0, 1000)
+//       soundPlayer.howler.play()
+//     }
+//   }, [playSound])
 
   useEffect(() => {
     if (show) {
+      set({ to: [{ opacity: 1 }], from: { opacity: 0} })
       setTimeout(() => {
         setShow(false)
       }, 5000)
@@ -59,7 +65,7 @@ const Creature = ({ data }) => {
           setShow(true)
         }}
       />
-      <Image src={url} show={show} dimensions={dimensions} position={position} />
+      <Image src={url} show={show} dimensions={dimensions} position={position} style={props} />
       <ReactHowler
         src="/sample.wav"
         preload={true}
