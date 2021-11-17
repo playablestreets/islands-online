@@ -2,9 +2,14 @@ import React, { useEffect, useRef } from "react"
 import ReactHowler from "react-howler"
 
 const AudioManager = ({ setPlayTrackFn }) => {
-  const noOfTracks = 9
   const trackRefs = useRef([])
   const playTracks = useRef(false)
+
+  const noOfTracks = 9
+  const trackVolume = 0.5
+  const volumeZero = 0
+  const beginFadeoutTime = 4000
+  const fadeTime = 1000
 
   const playTrack = trackNo => {
     const selectedTrack = trackRefs.current[trackNo - 1]?.howler
@@ -23,12 +28,12 @@ const AudioManager = ({ setPlayTrackFn }) => {
       )
     ) // logs tracks playback time
 
-    selectedTrack.fade(0, 1, 1000)
+    selectedTrack.fade(volumeZero, trackVolume, fadeTime)
 
     // fades out track after 4 seconds and ends at 5 seconds
     setTimeout(() => {
-      selectedTrack.fade(1, 0, 1000)
-    }, 4000)
+      selectedTrack.fade(trackVolume, volumeZero, fadeTime)
+    }, beginFadeoutTime)
   }
 
   useEffect(() => {
