@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import levelConfig from "../utils/levelConfig"
+import AudioManager from "../components/AudioManager"
 import Background from "../components/Background"
 import Island from "../components/Island"
 import styled from "styled-components"
@@ -19,11 +20,7 @@ const IslandWrapper = styled.div`
 
 export const GameScreen = ({ data }) => {
   const level = levelConfig(data)
-  const [audioRefs, setAudioRefs] = useState([])
-
-  useEffect(() => {
-    console.log('audio refs', audioRefs)
-  }, [audioRefs])
+  const [playTrackFn, setPlayTrackFn] = useState(null)
   
   const islands = [
     {
@@ -45,10 +42,11 @@ export const GameScreen = ({ data }) => {
 
   return (
     <Wrapper>
+      <AudioManager setPlayTrackFn={setPlayTrackFn}/>
       <Background>
         <IslandWrapper>
           {islands.map(island => (
-            <Island {...island} audioRefs={audioRefs} setAudioRefs={setAudioRefs}/>
+            <Island {...island} playTrackFn={playTrackFn} />
           ))}
         </IslandWrapper>
       </Background>

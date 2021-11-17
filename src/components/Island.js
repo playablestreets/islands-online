@@ -18,8 +18,7 @@ const Island = ({
   dimensions = { width: 600, height: 500 },
   position,
   island,
-  audioRefs,
-  setAudioRefs
+  playTrackFn,
 }) => {
   const { creatures, islandNo } = island
   const { width, height } = dimensions
@@ -36,9 +35,8 @@ const Island = ({
             data={creature}
             key={index}
             index={index}
+            playTrackFn={playTrackFn}
             islandNo={islandNo}
-            audioRefs={audioRefs}
-            setAudioRefs={setAudioRefs}
           />
         )
       })}

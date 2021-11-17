@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
-import ReactHowler from "react-howler"
 import { useSpring, animated } from "react-spring"
 
 const Wrapper = styled.div`
@@ -52,15 +51,12 @@ const directionAtlas = {
   northwest: "translate3d(30px, 60px, 0px)",
 }
 
-const Creature = ({ data, index, islandNo, audioRefs, setAudioRefs }) => {
+const Creature = ({ data, playTrackFn, index, islandNo }) => {
   const { data: d, position, animation, offset } = data
   const { creature_image } = d
   const creatureNo = index + 1 + (islandNo - 1) * 3
   const { url, dimensions } = creature_image
   const { rotate, direction } = animation
-
-  const [playSound, setPlaySound] = useState(false)
-  const [soundPlayer, setSoundPlayer] = useState(null)
   const [show, setShow] = useState(false)
 
   const animateFrom = {
@@ -81,18 +77,13 @@ const Creature = ({ data, index, islandNo, audioRefs, setAudioRefs }) => {
   const [props, set] = useSpring(() => animateFrom)
 
   useEffect(() => {
-    if (playSound) {
-      soundPlayer.howler.fade(1, 0, 1000)
-      soundPlayer.howler.play()
-    }
-  }, [playSound])
-
-  useEffect(() => {
     if (show) {
       set({
         to: animateTo,
         from: animateFrom,
       })
+      playTrackFn(creatureNo)
+
       setTimeout(() => {
         setShow(false)
       }, 5000)
@@ -100,29 +91,20 @@ const Creature = ({ data, index, islandNo, audioRefs, setAudioRefs }) => {
   }, [show])
 
   useEffect(() => {
-    if (soundPlayer) {
-      setAudioRefs([...audioRefs, soundPlayer])
-    }
-  }, [soundPlayer])
+    console.log('playtrackFn', playTrackFn)
+  },[playTrackFn])
 
   return (
     <Wrapper dimensions={dimensions} position={position}>
       <Mound
         onClick={() => {
           if (show) return
-          setPlaySound(true)
           setShow(true)
         }}
       />
       <ImageWrapper dimensions={dimensions} position={position} style={props}>
         <Image src={url} position={offset} />
       </ImageWrapper>
-      <ReactHowler
-        src={`/static/music/Islands_Web_${creatureNo}.mp3`}
-        preload={true}
-        playing={false}
-        ref={ref => setSoundPlayer(ref)}
-      />
     </Wrapper>
   )
 }
