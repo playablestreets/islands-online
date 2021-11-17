@@ -45,8 +45,8 @@ export const GameScreen = ({ data }) => {
       <AudioManager setPlayTrackFn={setPlayTrackFn}/>
       <Background>
         <IslandWrapper>
-          {islands.map(island => (
-            <Island {...island} playTrackFn={playTrackFn} />
+          {islands.map(islandObj => (
+            <Island {...islandObj} playTrackFn={playTrackFn} key={islandObj.island.islandNo} />
           ))}
         </IslandWrapper>
       </Background>
