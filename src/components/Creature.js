@@ -90,10 +90,6 @@ const Creature = ({ data, playTrackFn, index, islandNo }) => {
     }
   }, [show])
 
-  useEffect(() => {
-    console.log('playtrackFn', playTrackFn)
-  },[playTrackFn])
-
   return (
     <Wrapper dimensions={dimensions} position={position}>
       <Mound

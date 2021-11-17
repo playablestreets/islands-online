@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef } from "react"
 import ReactHowler from "react-howler"
 
 const AudioManager = ({ setPlayTrackFn }) => {
@@ -10,13 +10,16 @@ const AudioManager = ({ setPlayTrackFn }) => {
     const selectedTrack = trackRefs.current[trackNo - 1]?.howler
 
     if (!playTracks.current) {
-      console.log("RUN ONCE", playTracks)
       playTracks.current = true
       trackRefs.current.forEach(track => track.seek(0))
     }
 
     trackRefs.current.forEach((track, i) =>
-      console.log("track pos", i, track.seek())
+      console.log(
+        `Track-${
+          i + 1
+        } playback position: ${track.seek()} at ${performance.now()}`
+      )
     ) // logs tracks playback time
 
     selectedTrack.fade(0, 1, 1000)
@@ -32,24 +35,21 @@ const AudioManager = ({ setPlayTrackFn }) => {
       setPlayTrackFn(() => playTrack)
     }
   }, [trackRefs])
-  
 
   return (
     <>
       {Array.from(Array(noOfTracks)).map((_, i) => (
-        <>
-          <ReactHowler
-            src={`../../music/Islands_Web_${i + 1}.mp3`}
-            preload={true}
-            playing={true}
-            ref={ref =>
-              trackRefs.current.length < 9 && trackRefs.current.push(ref)
-            }
-            key={i}
-            volume={0}
-            loop={true}
-          />
-        </>
+        <ReactHowler
+          src={`../../music/Islands_Web_${i + 1}.mp3`}
+          preload={true}
+          playing={true}
+          ref={ref =>
+            trackRefs.current.length < 9 && trackRefs.current.push(ref)
+          }
+          key={i}
+          volume={0}
+          loop={true}
+        />
       ))}
     </>
   )

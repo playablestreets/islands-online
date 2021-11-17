@@ -23,7 +23,7 @@ export default function Index({ location }) {
       fetchCreatures(setCreatures, creature)
   }, [])
 
-  console.log('creatures', creatures)
+  console.log('Creatures from API:', creatures)
 
   return <>
     <GlobalStyle />
