@@ -14,7 +14,7 @@ const AudioManager = ({ setPlayTrackFn }) => {
 
   const [playTracks, setPlayTracks] = useState(false)
 
-  const playTrack = (trackNo) => {
+  const playTrack = trackNo => {
     //   console.log('from fn trackRefs', trackRefs)
     //     trackRefs.current[trackNo]?.howler.play()
     const selectedTrack = trackRefs.current[trackNo - 1]?.howler
@@ -22,22 +22,24 @@ const AudioManager = ({ setPlayTrackFn }) => {
     // selectedTrack.fade(0, 1, 20000)
 
     if (!playTracks) {
-        setPlayTracks(true)
-        trackRefs.current.forEach(track => track.play())
+      setPlayTracks(true)
+      trackRefs.current.forEach(track => track.play())
     }
-    
-    
-    selectedTrack.fade(0, 1, 1000)
-    setTimeout(() => {
-        selectedTrack.fade(1, 0, 1000)
-    }, 4000)
 
+    console.log(selectedTrack)
+      selectedTrack.fade(0, 1, 1000)
+      const start = performance.now()
+      setTimeout(() => {
+        selectedTrack.fade(1, 0, 1000)
+        const end = performance.now()
+        console.log("performance:", end - start)
+      }, 4000)
   }
 
   useEffect(() => {
     console.log("trackRefs", trackRefs)
     if (trackRefs.current.length > 0) {
-        setPlayTrackFn(() => playTrack)
+      setPlayTrackFn(() => playTrack)
     }
   }, [trackRefs])
 
@@ -49,12 +51,22 @@ const AudioManager = ({ setPlayTrackFn }) => {
             src={`/static/music/Islands_Web_${i + 1}.mp3`}
             preload={true}
             playing={false}
-            ref={ref => trackRefs.current.length < 9 && trackRefs.current.push(ref)}
+            ref={ref =>
+              trackRefs.current.length < 9 && trackRefs.current.push(ref)
+            }
             key={i}
             volume={0}
             loop={true}
           />
-          <button style={{position: "absolute", zIndex: 999, top: 0, left: `${(i + 1) * 60}px`}} onClick={() => trackRefs.current[i].howler.play()}>
+          <button
+            style={{
+              position: "absolute",
+              zIndex: 999,
+              top: 0,
+              left: `${(i + 1) * 60}px`,
+            }}
+            onClick={() => trackRefs.current[i].howler.play()}
+          >
             play {i}
           </button>
         </>
