@@ -18,8 +18,8 @@ const Image = styled(animated.img)`
 
 const ImageWrapper = styled(animated.div)`
   position: absolute;
-  left: ${props => `-${(props.dimensions.width ) * 0.75 / 2}px`};
-  top: ${props => `-${(props.dimensions.height) * 0.75 / 2}px`};
+  left: ${props => `-${(props.dimensions.width * 0.75) / 2}px`};
+  top: ${props => `-${(props.dimensions.height * 0.75) / 2}px`};
 `
 
 const Mound = styled.div`
@@ -52,9 +52,10 @@ const directionAtlas = {
   northwest: "translate3d(30px, 60px, 0px)",
 }
 
-const Creature = ({ data }) => {
+const Creature = ({ data, index, islandNo, audioRefs, setAudioRefs }) => {
   const { data: d, position, animation, offset } = data
   const { creature_image } = d
+  const creatureNo = index + 1 + (islandNo - 1) * 3
   const { url, dimensions } = creature_image
   const { rotate, direction } = animation
 
@@ -79,12 +80,12 @@ const Creature = ({ data }) => {
 
   const [props, set] = useSpring(() => animateFrom)
 
-  //   useEffect(() => {
-  //     if (playSound) {
-  //       soundPlayer.howler.fade(1, 0, 1000)
-  //       soundPlayer.howler.play()
-  //     }
-  //   }, [playSound])
+  useEffect(() => {
+    if (playSound) {
+      soundPlayer.howler.fade(1, 0, 1000)
+      soundPlayer.howler.play()
+    }
+  }, [playSound])
 
   useEffect(() => {
     if (show) {
@@ -97,6 +98,12 @@ const Creature = ({ data }) => {
       }, 5000)
     }
   }, [show])
+
+  useEffect(() => {
+    if (soundPlayer) {
+      setAudioRefs([...audioRefs, soundPlayer])
+    }
+  }, [soundPlayer])
 
   return (
     <Wrapper dimensions={dimensions} position={position}>
@@ -111,7 +118,7 @@ const Creature = ({ data }) => {
         <Image src={url} position={offset} />
       </ImageWrapper>
       <ReactHowler
-        src="/sample.wav"
+        src={`/static/music/Islands_Web_${creatureNo}.mp3`}
         preload={true}
         playing={false}
         ref={ref => setSoundPlayer(ref)}

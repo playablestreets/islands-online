@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import levelConfig from "../utils/levelConfig"
 import Background from "../components/Background"
 import Island from "../components/Island"
@@ -19,26 +19,37 @@ const IslandWrapper = styled.div`
 
 export const GameScreen = ({ data }) => {
   const level = levelConfig(data)
+  const [audioRefs, setAudioRefs] = useState([])
+
+  useEffect(() => {
+    console.log('audio refs', audioRefs)
+  }, [audioRefs])
+  
+  const islands = [
+    {
+      dimensions: { width: 660, height: 290 },
+      position: { x: "15px", y: "50px" },
+      island: level.islandOne
+    },
+    {
+      dimensions: { width: 410, height: 160 },
+      position: { x: "575px", y: "-60px" },
+      island: level.islandTwo
+    },
+    {
+      dimensions: { width: 490, height: 200 },
+      position: { x: "1000px", y: "10px" },
+      island: level.islandThree
+    }
+  ]
 
   return (
     <Wrapper>
       <Background>
         <IslandWrapper>
-          <Island
-            dimensions={{ width: 660, height: 290 }}
-            position={{ x: "15px", y: "50px" }}
-            creatures={level.islandOne}
-          />
-          <Island
-            dimensions={{ width: 410, height: 160 }}
-            position={{ x: "575px", y: "-60px" }}
-            creatures={level.islandTwo}
-          />
-          <Island
-            dimensions={{ width: 490, height: 200 }}
-            position={{ x: "1000px", y: "10px" }}
-            creatures={level.islandThree}
-          />
+          {islands.map(island => (
+            <Island {...island} audioRefs={audioRefs} setAudioRefs={setAudioRefs}/>
+          ))}
         </IslandWrapper>
       </Background>
     </Wrapper>

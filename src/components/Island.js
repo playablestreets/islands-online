@@ -17,8 +17,11 @@ export const IslandBox = styled.div`
 const Island = ({
   dimensions = { width: 600, height: 500 },
   position,
-  creatures,
+  island,
+  audioRefs,
+  setAudioRefs
 }) => {
+  const { creatures, islandNo } = island
   const { width, height } = dimensions
 
   return (
@@ -32,6 +35,10 @@ const Island = ({
           <Creature
             data={creature}
             key={index}
+            index={index}
+            islandNo={islandNo}
+            audioRefs={audioRefs}
+            setAudioRefs={setAudioRefs}
           />
         )
       })}
