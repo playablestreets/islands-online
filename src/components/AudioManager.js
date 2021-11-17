@@ -14,11 +14,12 @@ const AudioManager = ({ setPlayTrackFn }) => {
       trackRefs.current.forEach(track => track.seek(0))
     }
 
+    console.log("Track sync logs")
     trackRefs.current.forEach((track, i) =>
       console.log(
         `Track-${
           i + 1
-        } playback position: ${track.seek()} at ${performance.now()}`
+        } playback position: ${(track.seek()).toFixed(3)}sec at ${(performance.now() / 1000).toFixed(3)}sec`
       )
     ) // logs tracks playback time
 
