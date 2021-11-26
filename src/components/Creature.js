@@ -8,39 +8,81 @@ const Image = styled(animated.img)`
 
 const ImageWrapper = styled(animated.div)`
   position: absolute;
+  opacity: 1;
+  bottom: 0;
+  left: 0;
 `
 
-const Creature = ({ data, setCreatures, playTrackFn, index, animationDuration }) => {
+const Creature = ({ data, setCreatures, playTrackFn, index, animationDuration, randomPosX }) => {
   const { data: d, show } = data
   const { creature_image } = d
   const creatureNo = index + 1
-  const { url } = creature_image
+  const { url, dimensions } = creature_image
+  const [windowSize, setWindowSize] = useState({})
+
+  const SCREEN_WIDTH = windowSize.width;
+  const SCREEN_HEIGHT = windowSize.height;
+  const SEA_HEIGHT = SCREEN_HEIGHT * 0.65 - 120;
+  const MOVEMENT_MAGNITUDE = 300
+  const CREATURE_OFFSET = SCREEN_WIDTH / 9
+  
+  const initYMove = (Math.random() * (SEA_HEIGHT * 0.7)) + (SEA_HEIGHT * 0.3)
+
+  const randomiserX = () => {
+    const r = CREATURE_OFFSET * randomPosX - 20 + (Math.floor(Math.random() * MOVEMENT_MAGNITUDE))
+    console.log('random', r)
+    return Math.min(SCREEN_WIDTH - 240, r)
+  }
+
+  const randomiserY = () => {
+    const r = initYMove + (Math.floor(Math.random() * MOVEMENT_MAGNITUDE))
+    console.log('random', r)
+    return Math.min(SEA_HEIGHT, r)
+  }
 
   const animateFrom = {
     opacity: 0,
-    // ...(rotate ? { transform: "rotate(-90deg)" } : {}),
-    // ...(direction ? { transform: directionAtlas[direction] } : {}),
+    transform: `translate(${CREATURE_OFFSET * randomPosX - 20}px, ${-100}px)`,
   }
 
   const animateTo = [
     {
       opacity: 1,
-      // ...(rotate ? { transform: "rotate(0deg)" } : {}),
-      // ...(direction ? { transform: "translate3d(0px, 0px, 0px)" } : {}),
+      transform: `translate(${randomiserX()}px, ${-initYMove}px)`,
     },
-    { ...animateFrom, delay: animationDuration },
+    {
+      opacity: 1,
+      transform: `translate(${randomiserX()}px, ${-(randomiserY())}px)`,
+    },
+    {
+      opacity: 1,
+      transform: `translate(${randomiserX()}px, ${-(randomiserY())}px)`,
+    },
+    {
+      opacity: 1,
+      transform: `translate(${randomiserX()}px, ${-(randomiserY())}px)`,
+    },
+    {
+      opacity: 1,
+      transform: `translate(${randomiserX()}px, ${-(randomiserY())}px)`,
+    },
+    {
+      opacity: 1,
+      transform: `translate(${randomiserX()}px, ${-(randomiserY())}px)`
+    },
+    { ...animateFrom, delay: animationDuration - 2000 },
   ]
 
   const [props, set] = useSpring(() => animateFrom)
 
   useEffect(() => {
-    console.log('creature', creatureNo, show)
     if (show) {
       set({
         to: animateTo,
         from: animateFrom,
+        duration: animationDuration
       })
-      // playTrackFn(creatureNo)
+      playTrackFn(creatureNo)
 
       setTimeout(() => {
         setCreatures(prev => {
@@ -58,10 +100,31 @@ const Creature = ({ data, setCreatures, playTrackFn, index, animationDuration })
     }
   }, [show])
 
+  useEffect(() => {
+    setWindowSize({
+      height: window.innerHeight,
+      width: window.innerWidth
+    })
+
+    let resizeTimer;
+
+    window.addEventListener('resize', function (e) {
+
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        setWindowSize({
+          height: window.innerHeight,
+          width: window.innerWidth
+        })
+      }, 250);
+
+    });
+  }, [])
+
   return (
-      <ImageWrapper style={props}>
-        <Image src={url} />
-      </ImageWrapper>
+    <ImageWrapper style={props}>
+      <Image src={url} />
+    </ImageWrapper>
   )
 }
 
