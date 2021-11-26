@@ -33,6 +33,7 @@ const Creature = ({ data, setCreatures, playTrackFn, index, animationDuration, r
     console.log('random', r)
     return Math.min(SCREEN_WIDTH - 240, r)
   }
+  
 
   const randomiserY = () => {
     const r = initYMove + (Math.floor(Math.random() * MOVEMENT_MAGNITUDE))
