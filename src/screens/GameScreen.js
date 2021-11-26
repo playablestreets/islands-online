@@ -62,7 +62,7 @@ export const GameScreen = ({ data }) => {
             <Island {...islandObj} playTrackFn={playTrackFn} key={index} animationDuration={ANIMATION_DURATION} />
           ))}
         </IslandWrapper>
-        <Creatures creatures={creatures} animationDuration={ANIMATION_DURATION} playTrackFn={playTrackFn} />
+        <Creatures creatures={creatures} setCreatures={setCreatures} animationDuration={ANIMATION_DURATION} playTrackFn={playTrackFn} />
       </Background>
     </Wrapper>
   )

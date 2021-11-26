@@ -24,7 +24,7 @@ const ImageWrapper = styled(animated.div)`
   top: ${props => `-${(props.dimensions.height * 0.75) / 2}px`};
 `
 
-const Creature = ({ data, playTrackFn, index, islandNo, animationDuration }) => {
+const Creature = ({ data, setCreatures, playTrackFn, index, animationDuration }) => {
   const { data: d, show } = data
   const { creature_image } = d
   const creatureNo = index + 1
@@ -47,19 +47,29 @@ const Creature = ({ data, playTrackFn, index, islandNo, animationDuration }) => 
 
   // const [props, set] = useSpring(() => animateFrom)
 
-  // useEffect(() => {
-  //   if (show) {
-  //     set({
-  //       to: animateTo,
-  //       from: animateFrom,
-  //     })
-  //     playTrackFn(creatureNo)
+  useEffect(() => {
+    if (show) {
+      // set({
+      //   to: animateTo,
+      //   from: animateFrom,
+      // })
+      // playTrackFn(creatureNo)
 
-  //     setTimeout(() => {
-  //       setShow(false)
-  //     }, animationDuration)
-  //   }
-  // }, [show])
+      setTimeout(() => {
+        setCreatures(prev => {
+          return prev.map((creature, i) => {
+            if (i === index) {
+              return {
+                ...creature,
+                show: false
+              }
+            }
+            return creature
+          })
+        })
+      }, animationDuration)
+    }
+  }, [show])
 
   return (
     <Wrapper dimensions={dimensions} num={index + 1} show={show}>
