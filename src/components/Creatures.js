@@ -1,9 +1,18 @@
 import React from 'react'
 import Creature from "./Creature"
+import styled from "styled-components"
+
+const Wrapper = styled.div`
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+`
 
 const Creatures = ({ animationDuration, creatures, setCreatures, playTrackFn }) => {
     return (
-        <div>
+        <Wrapper>
             {creatures?.map((creature, index) => {
                 return (
                     <Creature
@@ -16,7 +25,7 @@ const Creatures = ({ animationDuration, creatures, setCreatures, playTrackFn }) 
                     />
                 )
             })}
-        </div>
+        </Wrapper>
     )
 }
 

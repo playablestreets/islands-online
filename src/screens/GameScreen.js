@@ -11,6 +11,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
+  user-select: none;
 `
 
 const IslandWrapper = styled.div`
@@ -40,30 +41,31 @@ export const GameScreen = ({ data }) => {
   ]
 
   return (
-    <Wrapper onClick={() => {
-      setCreatures(prev => {
-        // debugger
-        if (!prev) return data
-        let showNext = true
-        return prev.map(creature => {
-          if (showNext && !creature.show) {
-            showNext = false
-            return {...creature, show: true}
-          }
-          
-          return creature
-        })
-      })
-    }}>
+    <>
       <AudioManager setPlayTrackFn={setPlayTrackFn} animationDuration={ANIMATION_DURATION} />
-      <Background>
-        <IslandWrapper>
-          {islands.map((islandObj, index) => (
-            <Island {...islandObj} playTrackFn={playTrackFn} key={index} animationDuration={ANIMATION_DURATION} />
-          ))}
-        </IslandWrapper>
-        <Creatures creatures={creatures} setCreatures={setCreatures} animationDuration={ANIMATION_DURATION} playTrackFn={playTrackFn} />
-      </Background>
-    </Wrapper>
+      <Wrapper onClick={() => {
+        setCreatures(prev => {
+          if (!prev) return data
+          let showNext = true
+          return prev.map(creature => {
+            if (showNext && !creature.show) {
+              showNext = false
+              return { ...creature, show: true }
+            }
+
+            return creature
+          })
+        })
+      }}>
+        <Background>
+          <IslandWrapper>
+            {islands.map((islandObj, index) => (
+              <Island {...islandObj} playTrackFn={playTrackFn} key={index} animationDuration={ANIMATION_DURATION} />
+            ))}
+          </IslandWrapper>
+          <Creatures creatures={creatures} setCreatures={setCreatures} animationDuration={ANIMATION_DURATION} playTrackFn={playTrackFn} />
+        </Background>
+      </Wrapper>
+    </>
   )
 }
