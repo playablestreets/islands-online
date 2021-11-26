@@ -51,7 +51,7 @@ const directionAtlas = {
   northwest: "translate3d(30px, 60px, 0px)",
 }
 
-const Creature = ({ data, playTrackFn, index, islandNo }) => {
+const Creature = ({ data, playTrackFn, index, islandNo, animationDuration }) => {
   const { data: d, position, animation, offset } = data
   const { creature_image } = d
   const creatureNo = index + 1 + (islandNo - 1) * 3
@@ -71,7 +71,7 @@ const Creature = ({ data, playTrackFn, index, islandNo }) => {
       ...(rotate ? { transform: "rotate(0deg)" } : {}),
       ...(direction ? { transform: "translate3d(0px, 0px, 0px)" } : {}),
     },
-    { ...animateFrom, delay: 5000 },
+    { ...animateFrom, delay: animationDuration },
   ]
 
   const [props, set] = useSpring(() => animateFrom)
@@ -86,7 +86,7 @@ const Creature = ({ data, playTrackFn, index, islandNo }) => {
 
       setTimeout(() => {
         setShow(false)
-      }, 5000)
+      }, animationDuration)
     }
   }, [show])
 

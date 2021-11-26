@@ -19,6 +19,7 @@ const Island = ({
   position,
   island,
   playTrackFn,
+  animationDuration
 }) => {
   const { creatures, islandNo } = island
   const { width, height } = dimensions
@@ -37,6 +38,7 @@ const Island = ({
             index={index}
             playTrackFn={playTrackFn}
             islandNo={islandNo}
+            animationDuration={animationDuration}
           />
         )
       })}

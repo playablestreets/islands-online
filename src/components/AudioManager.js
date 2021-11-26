@@ -1,15 +1,15 @@
 import React, { useEffect, useRef } from "react"
 import ReactHowler from "react-howler"
 
-const AudioManager = ({ setPlayTrackFn }) => {
+const AudioManager = ({ setPlayTrackFn, animationDuration }) => {
   const trackRefs = useRef([])
   const playTracks = useRef(false)
 
   const noOfTracks = 9
   const trackVolume = 0.5
   const volumeZero = 0
-  const beginFadeoutTime = 4000
-  const fadeTime = 1000
+  const beginFadeoutTime = animationDuration - 2000
+  const fadeTime = 2000
 
   const playTrack = trackNo => {
     const selectedTrack = trackRefs.current[trackNo - 1]?.howler

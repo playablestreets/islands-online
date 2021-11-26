@@ -5,6 +5,8 @@ import Background from "../components/Background"
 import Island from "../components/Island"
 import styled from "styled-components"
 
+const ANIMATION_DURATION = 8000 // defined in milliseconds
+
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -42,11 +44,11 @@ export const GameScreen = ({ data }) => {
 
   return (
     <Wrapper>
-      <AudioManager setPlayTrackFn={setPlayTrackFn}/>
+      <AudioManager setPlayTrackFn={setPlayTrackFn} animationDuration={ANIMATION_DURATION} />
       <Background>
         <IslandWrapper>
           {islands.map(islandObj => (
-            <Island {...islandObj} playTrackFn={playTrackFn} key={islandObj.island.islandNo} />
+            <Island {...islandObj} playTrackFn={playTrackFn} key={islandObj.island.islandNo} animationDuration={ANIMATION_DURATION} />
           ))}
         </IslandWrapper>
       </Background>
