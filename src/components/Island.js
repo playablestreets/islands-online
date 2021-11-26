@@ -1,6 +1,5 @@
 import React from "react"
 import styled from "styled-components"
-import Creature from "../components/Creature"
 
 export const IslandBox = styled.div`
   display: none;
@@ -17,11 +16,7 @@ export const IslandBox = styled.div`
 const Island = ({
   dimensions = { width: 600, height: 500 },
   position,
-  island,
-  playTrackFn,
-  animationDuration
 }) => {
-  const { creatures, islandNo } = island
   const { width, height } = dimensions
 
   return (
@@ -29,20 +24,7 @@ const Island = ({
       width={width}
       height={height}
       position={position}
-    >
-      {creatures?.map((creature, index) => {
-        return (
-          <Creature
-            data={creature}
-            key={index}
-            index={index}
-            playTrackFn={playTrackFn}
-            islandNo={islandNo}
-            animationDuration={animationDuration}
-          />
-        )
-      })}
-    </IslandBox>
+    />
   )
 }
 

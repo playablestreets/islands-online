@@ -1,7 +1,7 @@
 import React, { useState } from "react"
-import levelConfig from "../utils/levelConfig"
 import AudioManager from "../components/AudioManager"
 import Background from "../components/Background"
+import Creatures from "../components/Creatures"
 import Island from "../components/Island"
 import styled from "styled-components"
 
@@ -21,36 +21,48 @@ const IslandWrapper = styled.div`
 `
 
 export const GameScreen = ({ data }) => {
-  const level = levelConfig(data)
   const [playTrackFn, setPlayTrackFn] = useState(null)
-  
+  const [creatures, setCreatures] = useState(data)
+
   const islands = [
     {
       dimensions: { width: 660, height: 290 },
       position: { x: "15px", y: "50px" },
-      island: level.islandOne
     },
     {
       dimensions: { width: 410, height: 160 },
       position: { x: "575px", y: "-60px" },
-      island: level.islandTwo
     },
     {
       dimensions: { width: 490, height: 200 },
       position: { x: "1000px", y: "10px" },
-      island: level.islandThree
     }
   ]
 
   return (
-    <Wrapper>
+    <Wrapper onClick={() => {
+      setCreatures(prev => {
+        // debugger
+        if (!prev) return data
+        let showNext = true
+        return prev.map(creature => {
+          if (showNext && !creature.show) {
+            showNext = false
+            return {...creature, show: true}
+          }
+          
+          return creature
+        })
+      })
+    }}>
       <AudioManager setPlayTrackFn={setPlayTrackFn} animationDuration={ANIMATION_DURATION} />
       <Background>
         <IslandWrapper>
-          {islands.map(islandObj => (
-            <Island {...islandObj} playTrackFn={playTrackFn} key={islandObj.island.islandNo} animationDuration={ANIMATION_DURATION} />
+          {islands.map((islandObj, index) => (
+            <Island {...islandObj} playTrackFn={playTrackFn} key={index} animationDuration={ANIMATION_DURATION} />
           ))}
         </IslandWrapper>
+        <Creatures creatures={creatures} animationDuration={ANIMATION_DURATION} playTrackFn={playTrackFn} />
       </Background>
     </Wrapper>
   )
