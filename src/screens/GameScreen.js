@@ -5,8 +5,9 @@ import Creatures from "../components/Creatures"
 import Island from "../components/Island"
 import styled from "styled-components"
 
+// defined in milliseconds
 const ANIMATION_FADE_TIME = 2000 
-const ANIMATION_ON_SCREEN = 6000 // defined in milliseconds
+const ANIMATION_ON_SCREEN = 6000
 const ANIMATION_DURATION = (ANIMATION_FADE_TIME * 2) + ANIMATION_ON_SCREEN
 
 const Wrapper = styled.div`
