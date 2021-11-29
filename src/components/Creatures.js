@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Creature from "./Creature"
 import styled from "styled-components"
+import shuffle from '../utils/shuffle'
 
 const Wrapper = styled.div`
     position: absolute;
@@ -9,7 +10,6 @@ const Wrapper = styled.div`
     top: 0;
     left: 0;
 `
-const shuffle = (array) => array.sort(() => Math.random() - 0.5);
   
 const Creatures = ({ animationDuration, animationFade, animationOnScreen, creatures, setCreatures, playTrackFn }) => {
     const defaultOrder = Array.from(Array(9).keys())
@@ -27,7 +27,7 @@ const Creatures = ({ animationDuration, animationFade, animationOnScreen, creatu
                         data={creature}
                         setCreatures={setCreatures}
                         randomPosX={creatureOrder[index]}
-                        key={index}
+                        key={creature.id}
                         index={index}
                         playTrackFn={playTrackFn}
                         animationDuration={animationDuration}

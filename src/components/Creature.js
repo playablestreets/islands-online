@@ -86,7 +86,9 @@ const Creature = ({ data, setCreatures, playTrackFn, index, animationDuration, a
 
       setTimeout(() => {
         setCreatures(prev => {
-          return prev.map((creature, i) => {
+          const { list, lastShown } = prev
+
+          const newList = list.map((creature, i) => {
             if (i === index) {
               return {
                 ...creature,
@@ -95,6 +97,11 @@ const Creature = ({ data, setCreatures, playTrackFn, index, animationDuration, a
             }
             return creature
           })
+
+          return {
+            list: newList,
+            lastShown
+          }
         })
       }, animationDuration)
     }

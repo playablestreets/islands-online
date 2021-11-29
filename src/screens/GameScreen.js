@@ -4,6 +4,7 @@ import Background from "../components/Background"
 import Creatures from "../components/Creatures"
 import Island from "../components/Island"
 import styled from "styled-components"
+import shuffle from '../utils/shuffle'
 
 // defined in milliseconds
 const ANIMATION_FADE_TIME = 2000 
@@ -26,7 +27,7 @@ const IslandWrapper = styled.div`
 
 export const GameScreen = ({ data }) => {
   const [playTrackFn, setPlayTrackFn] = useState(null)
-  const [creatures, setCreatures] = useState(data)
+  const [creatures, setCreatures] = useState({list: data, lastShown: null})
 
   const islands = [
     {
@@ -48,16 +49,28 @@ export const GameScreen = ({ data }) => {
       <AudioManager setPlayTrackFn={setPlayTrackFn} animationDuration={ANIMATION_DURATION} animationFade={ANIMATION_FADE_TIME} />
       <Wrapper onClick={() => {
         setCreatures(prev => {
-          if (!prev) return data
+          if (!prev) return ({list: data, lastShown: null})
+          const { list, lastShown } = prev
           let showNext = true
-          return prev.map(creature => {
-            if (showNext && !creature.show) {
+          let toShow = !(lastShown === null || lastShown === 8)
+            ? lastShown + 1 
+            : 0
+          let newLastShown = lastShown
+          
+          const newList = list.map((creature, i) => {
+            if (showNext && !creature.show && toShow === i) {
               showNext = false
+              newLastShown = toShow
               return { ...creature, show: true }
             }
 
             return creature
           })
+
+          return {
+            list: newList,
+            lastShown: newLastShown
+          }
         })
       }}>
         <Background>
@@ -66,7 +79,7 @@ export const GameScreen = ({ data }) => {
               <Island {...islandObj} playTrackFn={playTrackFn} key={index} />
             ))}
           </IslandWrapper>
-          <Creatures creatures={creatures} setCreatures={setCreatures} animationDuration={ANIMATION_DURATION} animationFade={ANIMATION_FADE_TIME} animationOnScreen={ANIMATION_ON_SCREEN} playTrackFn={playTrackFn} />
+          <Creatures creatures={creatures?.list} setCreatures={setCreatures} animationDuration={ANIMATION_DURATION} animationFade={ANIMATION_FADE_TIME} animationOnScreen={ANIMATION_ON_SCREEN} playTrackFn={playTrackFn} />
         </Background>
       </Wrapper>
     </>
