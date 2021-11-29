@@ -5,7 +5,9 @@ import Creatures from "../components/Creatures"
 import Island from "../components/Island"
 import styled from "styled-components"
 
-const ANIMATION_DURATION = 8000 // defined in milliseconds
+const ANIMATION_FADE_TIME = 2000 
+const ANIMATION_ON_SCREEN = 6000 // defined in milliseconds
+const ANIMATION_DURATION = (ANIMATION_FADE_TIME * 2) + ANIMATION_ON_SCREEN
 
 const Wrapper = styled.div`
   width: 100%;
@@ -42,7 +44,7 @@ export const GameScreen = ({ data }) => {
 
   return (
     <>
-      <AudioManager setPlayTrackFn={setPlayTrackFn} animationDuration={ANIMATION_DURATION} />
+      <AudioManager setPlayTrackFn={setPlayTrackFn} animationDuration={ANIMATION_DURATION} animationFade={ANIMATION_FADE_TIME} />
       <Wrapper onClick={() => {
         setCreatures(prev => {
           if (!prev) return data
@@ -60,10 +62,10 @@ export const GameScreen = ({ data }) => {
         <Background>
           <IslandWrapper>
             {islands.map((islandObj, index) => (
-              <Island {...islandObj} playTrackFn={playTrackFn} key={index} animationDuration={ANIMATION_DURATION} />
+              <Island {...islandObj} playTrackFn={playTrackFn} key={index} />
             ))}
           </IslandWrapper>
-          <Creatures creatures={creatures} setCreatures={setCreatures} animationDuration={ANIMATION_DURATION} playTrackFn={playTrackFn} />
+          <Creatures creatures={creatures} setCreatures={setCreatures} animationDuration={ANIMATION_DURATION} animationFade={ANIMATION_FADE_TIME} animationOnScreen={ANIMATION_ON_SCREEN} playTrackFn={playTrackFn} />
         </Background>
       </Wrapper>
     </>

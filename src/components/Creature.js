@@ -13,7 +13,7 @@ const ImageWrapper = styled(animated.div)`
   left: 0;
 `
 
-const Creature = ({ data, setCreatures, playTrackFn, index, animationDuration, randomPosX }) => {
+const Creature = ({ data, setCreatures, playTrackFn, index, animationDuration, animationFade, animationOnScreen, randomPosX }) => {
   const { data: d, show } = data
   const { creature_image } = d
   const creatureNo = index + 1
@@ -25,8 +25,7 @@ const Creature = ({ data, setCreatures, playTrackFn, index, animationDuration, r
   const SEA_HEIGHT = SCREEN_HEIGHT * 0.65 - 120;
   const MOVEMENT_MAGNITUDE = 200
   const CREATURE_OFFSET = SCREEN_WIDTH / 9
-  const IN_OUT_DURATION = animationDuration * 0.25;
-  const REGULAR_DURATION =  (animationDuration * 0.5) / 4;
+  const animationFrameTime =  animationOnScreen / 4;
   
   const initYMove = (Math.random() * (SEA_HEIGHT * 0.7)) + (SEA_HEIGHT * 0.3)
 
@@ -50,29 +49,29 @@ const Creature = ({ data, setCreatures, playTrackFn, index, animationDuration, r
     {
       opacity: 1,
       transform: `translate(${randomiserX()}px, ${-initYMove}px)`,
-      config: { duration: IN_OUT_DURATION }
+      config: { duration: animationFade }
     },
     {
       opacity: 1,
       transform: `translate(${randomiserX()}px, ${-(randomiserY())}px)`,
-      config: { duration: REGULAR_DURATION }
+      config: { duration: animationFrameTime }
     },
     {
       opacity: 1,
       transform: `translate(${randomiserX()}px, ${-(randomiserY())}px)`,
-      config: { duration: REGULAR_DURATION }
+      config: { duration: animationFrameTime }
     },
     {
       opacity: 1,
       transform: `translate(${randomiserX()}px, ${-(randomiserY())}px)`,
-      config: { duration: REGULAR_DURATION }
+      config: { duration: animationFrameTime }
     },
     {
       opacity: 1,
       transform: `translate(${randomiserX()}px, ${-(randomiserY())}px)`,
-      config: { duration: REGULAR_DURATION }
+      config: { duration: animationFrameTime }
     },
-    { ...animateFrom, config: { duration: IN_OUT_DURATION } },
+    { ...animateFrom, config: { duration: animationFade } },
   ]
 
   const [props, set] = useSpring(() => animateFrom)

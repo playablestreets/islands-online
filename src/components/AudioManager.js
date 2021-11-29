@@ -8,8 +8,8 @@ const AudioManager = ({ setPlayTrackFn, animationDuration }) => {
   const noOfTracks = 9
   const trackVolume = 0.5
   const volumeZero = 0
-  const beginFadeoutTime = animationDuration - 2000
-  const fadeTime = 2000
+  const beginFadeoutTime = animationDuration - 1000
+  const fadeTime = 1000
 
   const playTrack = trackNo => {
     const selectedTrack = trackRefs.current[trackNo - 1]?.howler
@@ -26,11 +26,10 @@ const AudioManager = ({ setPlayTrackFn, animationDuration }) => {
           i + 1
         } playback position: ${(track.seek()).toFixed(3)}sec at ${(performance.now() / 1000).toFixed(3)}sec`
       )
-    ) // logs tracks playback time
+    )
 
     selectedTrack.fade(volumeZero, trackVolume, fadeTime)
 
-    // fades out track after 4 seconds and ends at 5 seconds
     setTimeout(() => {
       selectedTrack.fade(trackVolume, volumeZero, fadeTime)
     }, beginFadeoutTime)

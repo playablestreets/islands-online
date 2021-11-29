@@ -11,7 +11,7 @@ const Wrapper = styled.div`
 `
 const shuffle = (array) => array.sort(() => Math.random() - 0.5);
   
-const Creatures = ({ animationDuration, creatures, setCreatures, playTrackFn }) => {
+const Creatures = ({ animationDuration, animationFade, animationOnScreen, creatures, setCreatures, playTrackFn }) => {
     const defaultOrder = Array.from(Array(9).keys())
     const [creatureOrder, setCreatureOrder] = useState(defaultOrder)
 
@@ -31,6 +31,8 @@ const Creatures = ({ animationDuration, creatures, setCreatures, playTrackFn }) 
                         index={index}
                         playTrackFn={playTrackFn}
                         animationDuration={animationDuration}
+                        animationFade={animationFade}
+                        animationOnScreen={animationOnScreen}
                     />
                 )
             })}
