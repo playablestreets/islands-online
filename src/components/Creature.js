@@ -32,14 +32,12 @@ const Creature = ({ data, setCreatures, playTrackFn, index, animationDuration, r
 
   const randomiserX = () => {
     const r = CREATURE_OFFSET * randomPosX - 20 + (Math.floor(Math.random() * MOVEMENT_MAGNITUDE))
-    console.log('random', r)
     return Math.min(SCREEN_WIDTH - 240, r)
   }
   
 
   const randomiserY = () => {
     const r = initYMove + (Math.floor(Math.random() * MOVEMENT_MAGNITUDE))
-    console.log('random', r)
     return Math.min(SEA_HEIGHT, r)
   }
 
