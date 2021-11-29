@@ -23,8 +23,10 @@ const Creature = ({ data, setCreatures, playTrackFn, index, animationDuration, r
   const SCREEN_WIDTH = windowSize.width;
   const SCREEN_HEIGHT = windowSize.height;
   const SEA_HEIGHT = SCREEN_HEIGHT * 0.65 - 120;
-  const MOVEMENT_MAGNITUDE = 300
+  const MOVEMENT_MAGNITUDE = 200
   const CREATURE_OFFSET = SCREEN_WIDTH / 9
+  const IN_OUT_DURATION = animationDuration * 0.25;
+  const REGULAR_DURATION =  (animationDuration * 0.5) / 4;
   
   const initYMove = (Math.random() * (SEA_HEIGHT * 0.7)) + (SEA_HEIGHT * 0.3)
 
@@ -50,28 +52,29 @@ const Creature = ({ data, setCreatures, playTrackFn, index, animationDuration, r
     {
       opacity: 1,
       transform: `translate(${randomiserX()}px, ${-initYMove}px)`,
+      config: { duration: IN_OUT_DURATION }
     },
     {
       opacity: 1,
       transform: `translate(${randomiserX()}px, ${-(randomiserY())}px)`,
+      config: { duration: REGULAR_DURATION }
     },
     {
       opacity: 1,
       transform: `translate(${randomiserX()}px, ${-(randomiserY())}px)`,
+      config: { duration: REGULAR_DURATION }
     },
     {
       opacity: 1,
       transform: `translate(${randomiserX()}px, ${-(randomiserY())}px)`,
+      config: { duration: REGULAR_DURATION }
     },
     {
       opacity: 1,
       transform: `translate(${randomiserX()}px, ${-(randomiserY())}px)`,
+      config: { duration: REGULAR_DURATION }
     },
-    {
-      opacity: 1,
-      transform: `translate(${randomiserX()}px, ${-(randomiserY())}px)`
-    },
-    { ...animateFrom, delay: animationDuration - 2000 },
+    { ...animateFrom, config: { duration: IN_OUT_DURATION } },
   ]
 
   const [props, set] = useSpring(() => animateFrom)
@@ -81,7 +84,6 @@ const Creature = ({ data, setCreatures, playTrackFn, index, animationDuration, r
       set({
         to: animateTo,
         from: animateFrom,
-        duration: animationDuration
       })
       playTrackFn(creatureNo)
 
