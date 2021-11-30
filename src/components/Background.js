@@ -33,6 +33,22 @@ const Sea = styled.div`
   ${IslandBox} {
     :nth-of-type(1) {
       display: block;
+
+      @media (max-width: 1023px) {
+        width: 60%;
+        left: 20%;
+        top: -150px;
+      }
+
+      @media (max-width: 768px) {
+        width: 70%;
+        left: 15%;
+      }
+
+      @media (max-width: 375px) {
+        width: 80%;
+        left: 10%;
+      }
     }
 
     :nth-of-type(2) {

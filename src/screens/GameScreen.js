@@ -36,7 +36,7 @@ export const GameScreen = ({ data }) => {
     },
     {
       dimensions: { width: 410 },
-      position: { x: "575px", y: "-270px" },
+      position: { x: "575px", y: "-240px" },
     },
     {
       dimensions: { width: 490 },
