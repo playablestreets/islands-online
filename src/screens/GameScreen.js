@@ -44,15 +44,15 @@ export const GameScreen = ({ data }) => {
     },
   ]
 
-  useEffect(() => {
-    const clickListener = document.addEventListener("click", e =>
-      tapAnimation(e, "clickAnimation")
-    )
+  // useEffect(() => {
+  //   const clickListener = document.addEventListener("click", e =>
+  //     tapAnimation(e, "clickAnimation")
+  //   )
 
-    return () => {
-      document.removeEventListener("click", clickListener)
-    }
-  }, [])
+  //   return () => {
+  //     document.removeEventListener("click", clickListener)
+  //   }
+  // }, [])
 
   const onScreenTap = event => {
     // Extend with additional functionality here
