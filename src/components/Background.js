@@ -49,6 +49,12 @@ const Sea = styled.div`
         width: 80%;
         left: 10%;
       }
+
+      @media (max-height: 400px) {
+        width: 46%;
+        left: 28%;
+        top: -165px;
+      }
     }
 
     :nth-of-type(2) {
