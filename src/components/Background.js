@@ -64,7 +64,7 @@ const Sea = styled.div`
     }
 
     :nth-of-type(3) {
-        @media (min-width: 1440px) {
+        @media (min-width: 1366px) {
             display: block;
         }
     }
