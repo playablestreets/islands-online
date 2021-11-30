@@ -1,15 +1,15 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import AudioManager from "../components/AudioManager"
 import Background from "../components/Background"
 import Creatures from "../components/Creatures"
 import Island from "../components/Island"
 import styled from "styled-components"
-import shuffle from '../utils/shuffle'
+import tapAnimation from "../utils/tapAnimation"
 
 // defined in milliseconds
-const ANIMATION_FADE_TIME = 2000 
+const ANIMATION_FADE_TIME = 2000
 const ANIMATION_ON_SCREEN = 6000
-const ANIMATION_DURATION = (ANIMATION_FADE_TIME * 2) + ANIMATION_ON_SCREEN
+const ANIMATION_DURATION = ANIMATION_FADE_TIME * 2 + ANIMATION_ON_SCREEN
 
 const Wrapper = styled.div`
   width: 100%;
@@ -27,7 +27,7 @@ const IslandWrapper = styled.div`
 
 export const GameScreen = ({ data }) => {
   const [playTrackFn, setPlayTrackFn] = useState(null)
-  const [creatures, setCreatures] = useState({list: data, lastShown: null})
+  const [creatures, setCreatures] = useState({ list: data, lastShown: null })
 
   const islands = [
     {
@@ -41,22 +41,28 @@ export const GameScreen = ({ data }) => {
     {
       dimensions: { width: 490 },
       position: { x: "900px", y: "-220px" },
-    }
+    },
   ]
 
-  const onScreenTap = (event) => {
+  useEffect(() => {
+    const clickListener = document.addEventListener("click", tapAnimation)
+
+    return () => {
+      document.removeEventListener("click", clickListener)
+    }
+  }, [])
+
+  const onScreenTap = event => {
     // Extend with additional functionality here
 
     // Handles display of creatures
     setCreatures(prev => {
-      if (!prev) return ({list: data, lastShown: null})
+      if (!prev) return { list: data, lastShown: null }
       const { list, lastShown } = prev
       let showNext = true
-      let toShow = !(lastShown === null || lastShown === 8)
-        ? lastShown + 1 
-        : 0
+      let toShow = !(lastShown === null || lastShown === 8) ? lastShown + 1 : 0
       let newLastShown = lastShown
-      
+
       const newList = list.map((creature, i) => {
         if (showNext && !creature.show && toShow === i) {
           showNext = false
@@ -69,22 +75,38 @@ export const GameScreen = ({ data }) => {
 
       return {
         list: newList,
-        lastShown: newLastShown
+        lastShown: newLastShown,
       }
     })
   }
 
   return (
     <>
-      <AudioManager setPlayTrackFn={setPlayTrackFn} animationDuration={ANIMATION_DURATION} animationFade={ANIMATION_FADE_TIME} />
-      <Wrapper onClick={onScreenTap}> 
+      <AudioManager
+        setPlayTrackFn={setPlayTrackFn}
+        animationDuration={ANIMATION_DURATION}
+        animationFade={ANIMATION_FADE_TIME}
+      />
+      <Wrapper onClick={onScreenTap}>
         <Background>
           <IslandWrapper>
             {islands.map((islandObj, index) => (
-              <Island {...islandObj} playTrackFn={playTrackFn} key={index} index={index} />
+              <Island
+                {...islandObj}
+                playTrackFn={playTrackFn}
+                key={index}
+                index={index}
+              />
             ))}
           </IslandWrapper>
-          <Creatures creatures={creatures?.list} setCreatures={setCreatures} animationDuration={ANIMATION_DURATION} animationFade={ANIMATION_FADE_TIME} animationOnScreen={ANIMATION_ON_SCREEN} playTrackFn={playTrackFn} />
+          <Creatures
+            creatures={creatures?.list}
+            setCreatures={setCreatures}
+            animationDuration={ANIMATION_DURATION}
+            animationFade={ANIMATION_FADE_TIME}
+            animationOnScreen={ANIMATION_ON_SCREEN}
+            playTrackFn={playTrackFn}
+          />
         </Background>
       </Wrapper>
     </>
