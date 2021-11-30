@@ -31,16 +31,16 @@ export const GameScreen = ({ data }) => {
 
   const islands = [
     {
-      dimensions: { width: 660, height: 290 },
-      position: { x: "15px", y: "50px" },
+      dimensions: { width: 660 },
+      position: { x: "0px", y: "-280px" },
     },
     {
-      dimensions: { width: 410, height: 160 },
-      position: { x: "575px", y: "-60px" },
+      dimensions: { width: 410 },
+      position: { x: "575px", y: "-270px" },
     },
     {
-      dimensions: { width: 490, height: 200 },
-      position: { x: "1000px", y: "10px" },
+      dimensions: { width: 490 },
+      position: { x: "1000px", y: "-220px" },
     }
   ]
 
@@ -72,11 +72,11 @@ export const GameScreen = ({ data }) => {
             lastShown: newLastShown
           }
         })
-      }}>
+      }}> 
         <Background>
           <IslandWrapper>
             {islands.map((islandObj, index) => (
-              <Island {...islandObj} playTrackFn={playTrackFn} key={index} />
+              <Island {...islandObj} playTrackFn={playTrackFn} key={index} index={index} />
             ))}
           </IslandWrapper>
           <Creatures creatures={creatures?.list} setCreatures={setCreatures} animationDuration={ANIMATION_DURATION} animationFade={ANIMATION_FADE_TIME} animationOnScreen={ANIMATION_ON_SCREEN} playTrackFn={playTrackFn} />
