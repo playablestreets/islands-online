@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 const IslandWrapper = styled.div`
   position: relative;
   height: 100%;
-  max-width: 1510px;
+  max-width: 1436px;
   margin: 0 auto;
 `
 
@@ -44,35 +44,40 @@ export const GameScreen = ({ data }) => {
     }
   ]
 
+  const onScreenTap = (event) => {
+    // Extend with additional functionality here
+
+    // Handles display of creatures
+    setCreatures(prev => {
+      if (!prev) return ({list: data, lastShown: null})
+      const { list, lastShown } = prev
+      let showNext = true
+      let toShow = !(lastShown === null || lastShown === 8)
+        ? lastShown + 1 
+        : 0
+      let newLastShown = lastShown
+      
+      const newList = list.map((creature, i) => {
+        if (showNext && !creature.show && toShow === i) {
+          showNext = false
+          newLastShown = toShow
+          return { ...creature, show: true }
+        }
+
+        return creature
+      })
+
+      return {
+        list: newList,
+        lastShown: newLastShown
+      }
+    })
+  }
+
   return (
     <>
       <AudioManager setPlayTrackFn={setPlayTrackFn} animationDuration={ANIMATION_DURATION} animationFade={ANIMATION_FADE_TIME} />
-      <Wrapper onClick={() => {
-        setCreatures(prev => {
-          if (!prev) return ({list: data, lastShown: null})
-          const { list, lastShown } = prev
-          let showNext = true
-          let toShow = !(lastShown === null || lastShown === 8)
-            ? lastShown + 1 
-            : 0
-          let newLastShown = lastShown
-          
-          const newList = list.map((creature, i) => {
-            if (showNext && !creature.show && toShow === i) {
-              showNext = false
-              newLastShown = toShow
-              return { ...creature, show: true }
-            }
-
-            return creature
-          })
-
-          return {
-            list: newList,
-            lastShown: newLastShown
-          }
-        })
-      }}> 
+      <Wrapper onClick={onScreenTap}> 
         <Background>
           <IslandWrapper>
             {islands.map((islandObj, index) => (
