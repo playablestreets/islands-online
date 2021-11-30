@@ -16,16 +16,17 @@ const IslandImage = styled.img``
 const Island = ({
   dimensions = { width: 600, height: 500 },
   position,
-  index
+  index,
 }) => {
   const { width } = dimensions
 
   return (
-    <IslandBox
-      position={position}
-      width={width}
-    >
-      <IslandImage src={`../../images/island${index + 1}.png`} width="100%" height="100%" />
+    <IslandBox position={position} width={width}>
+      <IslandImage
+        src={`../../images/island${index + 1}.png`}
+        width="100%"
+        height="100%"
+      />
     </IslandBox>
   )
 }

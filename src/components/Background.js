@@ -58,15 +58,15 @@ const Sea = styled.div`
     }
 
     :nth-of-type(2) {
-        @media (min-width: 1024px) {
-            display: block;
-        }
+      @media (min-width: 1024px) {
+        display: block;
+      }
     }
 
     :nth-of-type(3) {
-        @media (min-width: 1366px) {
-            display: block;
-        }
+      @media (min-width: 1366px) {
+        display: block;
+      }
     }
   }
 `

@@ -22,9 +22,9 @@ const AudioManager = ({ setPlayTrackFn, animationDuration }) => {
     console.log("Track sync logs")
     trackRefs.current.forEach((track, i) =>
       console.log(
-        `Track-${
-          i + 1
-        } playback position: ${(track.seek()).toFixed(3)}sec at ${(performance.now() / 1000).toFixed(3)}sec`
+        `Track-${i + 1} playback position: ${track.seek().toFixed(3)}sec at ${(
+          performance.now() / 1000
+        ).toFixed(3)}sec`
       )
     )
 

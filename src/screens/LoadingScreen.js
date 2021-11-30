@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 import styled from "styled-components"
 
 const Text = styled.h2`
@@ -22,9 +22,12 @@ const Paragraph = styled.p`
 
 export const LoadingScreen = () => {
   return (
-    <div style={{marginTop: "40vh"}}>
+    <div style={{ marginTop: "40vh" }}>
       <Text>Loading...</Text>
-      <Paragraph>Check your device sound is off silent to have the best Islands experience 🏝️</Paragraph>
+      <Paragraph>
+        Check your device sound 🔊 is off silent to have the best Islands
+        experience 🏝️
+      </Paragraph>
     </div>
   )
 }
