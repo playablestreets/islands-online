@@ -8,13 +8,23 @@ const Text = styled.h2`
   color: magenta;
   width: 100%;
   text-align: center;
-  margin-top: 40vh;
+  font-family: sans-serif;
+`
+
+const Paragraph = styled.p`
+  font-size: 1.5em;
+  font-weight: 400;
+  color: blue;
+  width: 100%;
+  text-align: center;
+  font-family: sans-serif;
 `
 
 export const LoadingScreen = () => {
-    return (
-        <div>
-          <Text>Loading...</Text>  
-        </div>
-    )
+  return (
+    <div style={{marginTop: "40vh"}}>
+      <Text>Loading...</Text>
+      <Paragraph>Check your device sound is off silent to have the best Islands experience 🏝️</Paragraph>
+    </div>
+  )
 }

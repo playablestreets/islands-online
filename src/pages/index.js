@@ -16,6 +16,7 @@ const parseQueryString = string => string.substring(1).split("&")[0]
 
 export default function Index({ location }) {
   const [creatures, setCreatures] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     Array.from(Array(3)).forEach((_, i) => {
@@ -24,9 +25,13 @@ export default function Index({ location }) {
       img.src = `../../images/island${islandNo}.png`
       console.log('img', islandNo, img)
     })
-    
+
     const creature = parseQueryString(location?.search)
     fetchCreatures(setCreatures, creature)
+
+    setTimeout(() => {
+      setLoading(false)
+    }, 3000)
   }, [])
 
   console.log("Creatures from API:", creatures)
@@ -38,7 +43,7 @@ export default function Index({ location }) {
         <meta charSet="utf-8" />
         <title>Islands Online</title>
       </Helmet>
-      {creatures ? <GameScreen data={creatures} /> : <LoadingScreen />}
+      {(creatures && !loading) ? <GameScreen data={creatures} /> : <LoadingScreen />}
     </>
   )
 }
