@@ -18,6 +18,13 @@ export default function Index({ location }) {
   const [creatures, setCreatures] = useState(null)
 
   useEffect(() => {
+    Array.from(Array(3)).forEach((_, i) => {
+      const islandNo = i + 1
+      const img = new Image();
+      img.src = `../../images/island${islandNo}.png`
+      console.log('img', islandNo, img)
+    })
+    
     const creature = parseQueryString(location?.search)
     fetchCreatures(setCreatures, creature)
   }, [])
