@@ -45,7 +45,9 @@ export const GameScreen = ({ data }) => {
   ]
 
   useEffect(() => {
-    const clickListener = document.addEventListener("click", tapAnimation)
+    const clickListener = document.addEventListener("click", e =>
+      tapAnimation(e, "clickAnimation")
+    )
 
     return () => {
       document.removeEventListener("click", clickListener)
