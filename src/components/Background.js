@@ -29,6 +29,15 @@ const Sea = styled.div`
     rgba(31, 90, 254, 1) 0%,
     rgba(8, 31, 118, 1) 100%
   );
+`
+
+const SeaOverlay = styled.div`
+  position: absolute;
+  z-index: 99;
+  width: 100%;
+  height: calc(64% + 15px);
+  bottom: 0;
+  left: 0;
 
   ${IslandBox} {
     :nth-of-type(1) {
@@ -88,7 +97,8 @@ const Background = ({ children }) => {
   return (
     <>
       <Sky />
-      <Sea>{children}</Sea>
+      <Sea />
+      <SeaOverlay>{children}</SeaOverlay>
     </>
   )
 }
