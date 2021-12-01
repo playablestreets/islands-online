@@ -45,7 +45,7 @@ const AudioManager = ({ setPlayTrackFn, animationDuration }) => {
     <>
       {Array.from(Array(noOfTracks)).map((_, i) => (
         <ReactHowler
-          src={`../../music/Islands_Web_${i + 1}.mp3`}
+          src={`../../music/Islands-Web-${i + 1}.mp3`}
           preload={true}
           playing={true}
           ref={ref =>
