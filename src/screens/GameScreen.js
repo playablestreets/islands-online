@@ -25,9 +25,51 @@ const IslandWrapper = styled.div`
   margin: 0 auto;
 `
 
+const HomeLink = styled.a`
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 999;
+  width: 80px;
+  height: 80px;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+`
+const InstructionalText = styled.p`
+  position: fixed;
+  width: 70%;
+  left: 15%;
+  text-align: center;
+  bottom: 15vh;
+  color: #fff;
+  font-weight: 300;
+  font-family: sans-serif;
+  font-size: 22px;
+  transition: opacity ease-in-out 500ms;
+  opacity: ${props => (props.hide ? 0 : 1)};
+
+  @media (min-width: 768px) {
+    font-size: 28px;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 36px;
+  }
+`
+
+const HomeButton = () => (
+  <HomeLink href="https://www.playableweb.com/">
+    <img src="/images/home01.svg" />
+  </HomeLink>
+)
+
 export const GameScreen = ({ data }) => {
   const [playTrackFn, setPlayTrackFn] = useState(null)
   const [creatures, setCreatures] = useState({ list: data, lastShown: null })
+  const [hideInstruction, setHideInstruction] = useState(false)
 
   const islands = [
     {
@@ -56,6 +98,13 @@ export const GameScreen = ({ data }) => {
 
   const onScreenTap = event => {
     // Extend with additional functionality here
+
+    if (!hideInstruction) {
+      setHideInstruction(true)
+      setTimeout(() => {
+        setHideInstruction(false)
+      }, 5000)
+    }
 
     // Handles display of creatures
     setCreatures(prev => {
@@ -111,6 +160,10 @@ export const GameScreen = ({ data }) => {
           />
         </Background>
       </Wrapper>
+      <HomeButton />
+      <InstructionalText hide={hideInstruction}>
+        Touch anywhere on the screen to discover...
+      </InstructionalText>
     </>
   )
 }
