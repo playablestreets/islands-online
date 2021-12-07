@@ -40,6 +40,7 @@ const HomeLink = styled.a`
 `
 const InstructionalText = styled.p`
   position: fixed;
+  z-index: 999;
   width: 70%;
   left: 15%;
   text-align: center;
