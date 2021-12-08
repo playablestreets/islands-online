@@ -27,17 +27,23 @@ const IslandWrapper = styled.div`
 
 const HomeLink = styled.a`
   position: fixed;
-  top: 10px;
-  left: 10px;
+  top: 20px;
+  left: 20px;
   z-index: 999;
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
 
   img {
     width: 100%;
     height: 100%;
   }
 `
+
+const DIYLink = styled(HomeLink)`
+  left: unset;
+  right: 20px;
+`
+
 const InstructionalText = styled.p`
   position: fixed;
   z-index: 999;
@@ -65,6 +71,12 @@ const HomeButton = () => (
   <HomeLink href="https://www.playableweb.com/">
     <img src="/images/home01.svg" />
   </HomeLink>
+)
+
+const DIYButton = () => (
+  <DIYLink href="https://form.jotform.com/213407597151860">
+    <img src="/images/DIY.svg" />
+  </DIYLink>
 )
 
 export const GameScreen = ({ data }) => {
@@ -162,6 +174,7 @@ export const GameScreen = ({ data }) => {
         </Background>
       </Wrapper>
       <HomeButton />
+      <DIYButton />
       <InstructionalText hide={hideInstruction}>
         Touch anywhere on the screen to discover...
       </InstructionalText>
