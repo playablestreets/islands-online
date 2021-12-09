@@ -83,6 +83,7 @@ export const GameScreen = ({ data }) => {
   const [playTrackFn, setPlayTrackFn] = useState(null)
   const [creatures, setCreatures] = useState({ list: data, lastShown: null })
   const [hideInstruction, setHideInstruction] = useState(false)
+  const [timeoutId, setTimeoutId] = useState(null)
 
   const islands = [
     {
@@ -112,12 +113,13 @@ export const GameScreen = ({ data }) => {
   const onScreenTap = event => {
     // Extend with additional functionality here
 
-    if (!hideInstruction) {
-      setHideInstruction(true)
-      setTimeout(() => {
-        setHideInstruction(false)
-      }, 5000)
-    }
+    setHideInstruction(true)
+    clearTimeout(timeoutId)
+
+    const timeout = setTimeout(() => {
+      setHideInstruction(false)
+    }, 30000)
+    setTimeoutId(timeout)
 
     // Handles display of creatures
     setCreatures(prev => {
