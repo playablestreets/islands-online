@@ -26,7 +26,7 @@ export const LoadingScreen = () => {
     <div style={{ marginTop: "40vh" }}>
       <Text>Loading...</Text>
       <Paragraph>
-        Please turn your phone sound up and off silent 🔊
+        Please turn your sound up and off silent 🔊
       </Paragraph>
     </div>
   )
