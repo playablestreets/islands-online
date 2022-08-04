@@ -13,3 +13,5 @@ On line 9, `ANIMATION_ON_SCREEN` allows you to adjust how long the creature rema
 Additionally in `src/screens/GameScreen.js` for extending interactions:
 
 On line 47, `onScreenTap` is a function that gets called on screen tap/click. Extend functionality in the body of this function.
+
+🥾
